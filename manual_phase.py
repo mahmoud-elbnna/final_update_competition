@@ -16,7 +16,7 @@ class manualnode(Node):
             self.settings = termios.tcgetattr(sys.stdin)
             self.get_logger().info('Manual Node Initialized in Interactive Mode.')
             self.get_logger().info('Press [SPACEBAR] to toggle Manual/Auto mode.')
-            self.get_logger().info('Use [W/A/S/D] to drive when in Manual mode.')
+            self.get_logger().info('Use [W/A/S/D] to drive, [E] to stop when in Manual mode.')
             self.get_logger().info('Press [Q] to quit.')
         else:
             self.get_logger().warn('stdin is not a TTY terminal. Keyboard input disabled for this instance.')
@@ -45,13 +45,22 @@ class manualnode(Node):
             msg = Float32()
             msg.data = 1.0 if self.manual_active else 0.0
             self.phase_pub.publish(msg)
+            self.get_logger().info(f'Manual Mode Active: {self.manual_active}')
 
-        elif self.manual_active and key in ['w', 'a', 's', 'd']:
+        elif self.manual_active and key in ['w', 'a', 's', 'd', 'e']:
             twist = Twist()
-            if key == 'w': twist.linear.x = 0.2
-            elif key == 's': twist.linear.x = -0.2
-            elif key == 'a': twist.angular.z = 0.5
-            elif key == 'd': twist.angular.z = -0.5
+            if key == 'w':
+                twist.linear.x = 0.5
+            elif key == 's':
+                twist.linear.x = -0.5
+            elif key == 'a':
+                twist.angular.z = 0.7
+            elif key == 'd':
+                twist.angular.z = -0.7
+            elif key == 'e':
+                twist.linear.x = 0.0
+                twist.angular.z = 0.0
+                
             self.cmd_pub.publish(twist)
 
         elif key == 'q':
