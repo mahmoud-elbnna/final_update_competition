@@ -3,7 +3,6 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     
-    
     node1_selector = Node(
         package='mia_competition',
         executable='select_node',
@@ -11,7 +10,6 @@ def generate_launch_description():
         output='screen'
     )
 
-  
     node2_auto = Node(
         package='mia_competition',
         executable='auto_node',
@@ -19,7 +17,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    
     node3_manual = Node(
         package='mia_competition',
         executable='manual_node',
@@ -28,8 +25,16 @@ def generate_launch_description():
         prefix=['gnome-terminal --']
     )
 
+    node4_vision = Node(
+        package='mia_competition',
+        executable='vision_node',
+        name='scroll_detector',
+        output='screen'
+    )
+
     return LaunchDescription([
         node1_selector,
         node2_auto,
-        node3_manual
+        node3_manual,
+        node4_vision
     ])
