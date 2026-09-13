@@ -25,6 +25,7 @@ setup(
             'auto_node = mia_competition.autonmous_phase:main',
             'manual_node = mia_competition.manual_phase:main',
             'select_node = mia_competition.autonmous_manual_selection:main',
+            'vision_node = mia_competition.vision_phase:main',
         ],
     },
 )
